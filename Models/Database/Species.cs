@@ -12,7 +12,9 @@ namespace Zoo_Management.Models.Database
         Bird,
         Insect,
         Fish,
-        Invertebrate
+        Invertebrate,
+        Amphibian,
+        Mollousc
     }
     public class Species
     {

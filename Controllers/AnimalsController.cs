@@ -8,6 +8,7 @@ using Zoo_Management.Models.Database;
 using Zoo_Management.Models.Request;
 using Zoo_Management.Models.Response;
 using Zoo_Management.Repositories;
+using Zoo_Management.Data;
 
 
 
@@ -35,6 +36,7 @@ namespace Zoo_Management.Controllers
                 var animal = _animals.GetByAnimalId(id);
                 
                 var species = _species.GetBySpeciesId(animal.SpeciesId);
+                //don't have to go to database to get species id
                 return new AnimalResponse(animal, species);
             }
 
@@ -59,6 +61,20 @@ namespace Zoo_Management.Controllers
             var species =_species.GetListOfSpecies();
             return new SpeciesListResponse(species);
         }
+
+        [HttpGet("")]
+        public ActionResult<AnimalListResponse> Search([FromQuery] AnimalSearchRequest searchRequest)
+        {
+            var animals = _animals.Search(searchRequest);
+            var animalCount = _animals.Count(searchRequest);
+            return AnimalListResponse.Create(searchRequest, animals, animalCount);
+        }
+
+        
+
+       
+            
+        
 
 
         // [HttpGet]
